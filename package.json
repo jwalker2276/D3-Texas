@@ -1,0 +1,26 @@
+{
+  "name": "d3-texas",
+  "version": "0.0.1",
+  "description": "A d3 visualization of Texas data",
+  "main": "vis.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwalker2276/D3-Texas.git"
+  },
+  "author": "Jordan Walker",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jwalker2276/D3-Texas/issues"
+  },
+  "homepage": "https://github.com/jwalker2276/D3-Texas#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^4.0.0",
+    "gulp-autoprefixer": "^4.1.0",
+    "gulp-postcss": "^7.0.1"
+  }
+}
