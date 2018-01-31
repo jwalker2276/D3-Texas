@@ -1,0 +1,9 @@
+svg, select {
+  display: block;
+  margin: 0 auto;
+}
+
+path {
+  stroke: #ccc;
+  stroke-width: 0.25px;
+}
