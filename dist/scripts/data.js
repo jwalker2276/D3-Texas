@@ -12,51 +12,105 @@ d3.queue()
       pop2014: +row.respop72014,
       pop2015: +row.respop72015,
       pop2016: +row.respop72016,
+      years: [2010, 2011, 2012, 2013, 2014, 2015, 2016],
     };
   })
   .await(ready);
 
+//Primary function for svgs and data
 function ready(error, mapData, popData) {
   if (error) throw error;
 
+  //Convert topojson to json data
   let geoData = topojson.feature(mapData, {
     type: 'GeometryCollection',
     geometries: mapData.objects.texas_shape.geometries,
   }).features;
 
+  //Filter data and join
   popData.forEach(row => {
     let counties = geoData.filter(d => d.properties.GEOID == row.countyID);
     counties.forEach(county => county.properties = row);
   });
 
-  let width = 960;
-  let height = 600;
-  let scaleNum = 3000;
-  let x = width / 2;
-  let y = -100;
+  //Parameters for svg map
+  let mapWidth = 960;
+  let mapHeight = 600;
+  let mapScaleFactor = 3000;
+  let mapX = mapWidth / 2;
+  let mapY = -100;
 
-  let projection = d3.geoAlbersUsa().scale(scaleNum).translate([x, y]);
+  //Projection for map
+  let projection = d3.geoAlbersUsa().scale(mapScaleFactor).translate([mapX, mapY]);
 
+  //Apply projection to path data
   let geoPath = d3.geoPath().projection(projection);
 
+  //Set up tooltip element
+  let tooltip = d3.select('body').append('div').classed('tooltip', true);
+
+  //Select the map svg element
   d3.select('svg.map')
-      .attr('width', width)
-      .attr('height', height)
-    .selectAll('.county')
-    .data(geoData)
-    .enter()
-    .append('path')
-    .classed('county', true)
-    .attr('d', geoPath);
+      .attr('width', mapWidth) //Set width
+      .attr('height', mapHeight) //Set height
+    .selectAll('.county') //Set all paths with class .county
+    .data(geoData) //Get data ready
+    .enter() //Change to enter state
+    .append('path') //Add paths
+      .classed('county', true) //Apply classes to paths
+      .attr('d', geoPath) //Add path and filter data to paths
+    .on('mousemove', showTooltip)
+    .on('touchstart', showTooltip) //mobile
+    .on('mouseout', hideTooltip)
+    .on('touchend', hideTooltip); //mobile
 
-  let select = d3.select('select');
+  //Parameters for svg bar graph
+  let barWidth = 0;
+  let barHeight = 0;
 
-  select.on('change', d => setColor(d3.event.target.value));
+  //Select the bar svg element
+  d3.select('svg.bar') // TODO: working on bar graph
+    .attr('width', barWidth)
+    .attr('height', barHeight);
 
-  setColor(select.property('value'));
+  //Tooltip show
+  function showTooltip(d) {
+    tooltip
+      .style('opacity', 1)
+      .style('left', d3.event.x - (tooltip.node().offsetWidth / 2) + 'px')
+      .style('top', d3.event.y + 25 + 'px')
+      .html(`<p>${d.properties.countyName}</p>`);
+  }
 
+  //Tooltip hide
+  function hideTooltip() {
+    tooltip
+      .style('opacity', 0);
+  }
+
+  //Parameters for input selector
+  let years = d3.extent(geoData, d => d.year);
+  let currentYear = undefined;
+  let minYear = geoData[0].properties.years[0];
+  let maxYear = geoData[0].properties.years[geoData[0].properties.years.length - 1];
+
+  //Year input selector
+  d3.select('.year')
+    .property('min', minYear)
+    .property('max', maxYear)
+    .property('value', minYear)
+    .on('input', () => {
+      currentYear = +d3.event.target.value;
+      setColor('pop' + currentYear);
+      setYear(currentYear);
+    });
+
+  //Run functions with initial values
+  setColor('pop' + minYear);
+  setYear(minYear);
+
+  //Set color of counties
   function setColor(val) {
-
     let colorRanges = {
       pop2010: ['blue', 'red'],
       pop2011: ['white', 'purple'],
@@ -66,20 +120,25 @@ function ready(error, mapData, popData) {
       pop2015: ['white', 'purple'],
       pop2016: ['white', 'purple'],
     };
-
     let scale = d3.scaleLinear()
       .domain([0, d3.max(popData, d => d[val])])
       .range(colorRanges[val]);
 
+    //Set transitions and apply colors to map
     d3.selectAll('.county')
       .transition()
       .duration(750)
       .ease(d3.easeBackIn)
       .attr('fill', d => {
         let data = d.properties[val];
-        console.log(d.properties.pop2010);
-        console.log(data);
         return data ? scale(data) : '#ccc';
       });
   }
+
+  //Set year on header
+  function setYear(year) {
+    let yearDisplay = d3.select('.pop-year');
+    yearDisplay.text(year);
+  }
+
 }
