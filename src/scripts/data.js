@@ -61,17 +61,74 @@ function ready(error, mapData, popData) {
       .attr('d', geoPath) //Add path and filter data to paths
     .on('mousemove', showTooltip)
     .on('touchstart', showTooltip) //mobile
+    //.on('touchstart', getCountyData)
     .on('mouseout', hideTooltip)
-    .on('touchend', hideTooltip); //mobile
+    .on('touchend', hideTooltip) //mobile
+    .on('click', getCountyData);
 
-  //Parameters for svg bar graph
-  let barWidth = 0;
-  let barHeight = 0;
+  //*********************************************************************************
+  let countyName = '';
+  let countyData = [];
 
-  //Select the bar svg element
-  d3.select('svg.bar') // TODO: working on bar graph
-    .attr('width', barWidth)
-    .attr('height', barHeight);
+  function getCountyData(d) {
+    const data = d.properties;
+    countyName = data.countyName;
+    countyData = [
+      { year: 2010, population: data.pop2010 },
+      { year: 2011, population: data.pop2011 },
+      { year: 2012, population: data.pop2012 },
+      { year: 2013, population: data.pop2013 },
+      { year: 2014, population: data.pop2014 },
+      { year: 2015, population: data.pop2015 },
+      { year: 2016, population: data.pop2016 },
+    ];
+    lineSetup();
+  }
+
+  //*************************************************************************************
+
+  //Parameters for svg line graph
+  let barMargin = { top: 20, right: 20, bottom: 30, left: 50 };
+  let barWidth = 960 - barMargin.left - barMargin.right;
+  let barHeight = 500 - barMargin.top - barMargin.bottom;
+
+  //Setup Graph
+  let graph = d3.select('svg.bar')
+    .attr('width', barWidth + barMargin.left + barMargin.right)
+    .attr('height', barHeight + barMargin.top + barMargin.bottom)
+  .append('g')
+    .attr('transform', 'translate(' + barMargin.left + ',' + barMargin.bottom + ')');
+
+  //Scales
+  let x = d3.scaleLinear().range([0, barWidth]);
+  let y = d3.scaleLinear().range([barHeight, 0]);
+
+  //Line
+  let line = d3.line()
+    .x(function (d) {return x(d.year);})
+    .y(function (d) {return y(d.population);});
+
+  //Function sets up line with map county is clicked
+  function lineSetup() {
+    //Set domain
+    x.domain(d3.extent(countyData, function (d) {return d.year;}));
+
+    y.domain(d3.extent(countyData, function (d) {return d.population;}));
+
+    graph.append('g')
+      .attr('transform', 'translate(0,' + barHeight + ')')
+      .call(d3.axisBottom(x));
+
+    graph.append('g')
+      .call(d3.axisLeft(y));
+
+    graph.append('path')
+      .data([countyData])
+      .attr('class', 'line')
+      .attr('d', line);
+  }
+
+  //***********************************************************************************
 
   //Tooltip show
   function showTooltip(d) {

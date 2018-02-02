@@ -31,3 +31,10 @@ path {
   left: 50%;
   margin-left: -6px;
 }
+
+/* Line graph */
+.line {
+  stroke: lightgrey;
+  fill: none;
+  stroke-width: 2px;
+}
