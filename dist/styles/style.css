@@ -34,7 +34,12 @@ path {
 
 /* Line graph */
 .line {
-  stroke: lightgrey;
+  stroke: black;
   fill: none;
-  stroke-width: 2px;
+  stroke-width: 1px;
+}
+
+g.axis path{
+  stroke: black;
+  stroke-width: 1px;
 }
