@@ -1,49 +1,113 @@
-//Parameters for svg line graph
-let lineMargin = { top: 20, right: 20, bottom: 30, left: 50 };
-let lineWidth = 960 - lineMargin.left - lineMargin.right;
-let lineHeight = 500 - lineMargin.top - lineMargin.bottom;
-let graph = d3.select('svg.line');
+function createLineGraph(geoData, width, height) {
+  //Parameters for svg element
+  let margin = { top: 50, right: 50, bottom: 50, left: 75 };
+  let graphWidth = ((width / 2) - margin.left - margin.right);
+  let graphHeight = ((height / 2) - margin.top - margin.bottom);
 
-function createLineGraph(geoData) {
+  let xScale = d3.scaleLinear().range([0, graphWidth]);
+  let yScale = d3.scaleLinear().range([graphHeight, 0]);
+
+  let yearsArr = geoData[0].properties.years;
+
+  //Scales
+  xScale = d3.scaleLinear()
+    .domain(d3.extent(yearsArr, d => d))
+    .range([0, graphWidth]);
+
+  yScale = d3.scaleLinear()
+    .range([graphHeight, 0]);
+
   //Setup Graph
-  graph = d3.select('svg.line')
-    .attr('width', lineWidth + lineMargin.left + lineMargin.right)
-    .attr('height', lineHeight + lineMargin.top + lineMargin.bottom)
+  let graph = d3.select('svg.line')
+    .attr('width', graphWidth + margin.left + margin.right)
+    .attr('height', graphHeight + margin.top + margin.bottom)
   .append('g')
-    .attr('transform', 'translate(' + lineMargin.left + ',' + lineMargin.bottom + ')');
+    .classed('groups', true)
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-  getCountyData(geoData);
+  //Draw x-axis
+  graph
+    .append('g')
+      .classed('x-axis', true)
+      .attr('transform', 'translate(0,' + graphHeight + ')')
+      .call(d3.axisBottom(xScale).ticks(7).tickFormat(d3.format('.0f')));
+
+  //Draw y-axis
+  graph
+    .append('g')
+    .classed('y-axis', true)
+    .call(d3.axisLeft(yScale));
+
+  //Create line
+  graph
+    .append('path')
+    .classed('line', true);
+
+  //Draw x-axis label
+  graph
+    .append('text')
+    .classed('x-label', true)
+    .attr('x', graphWidth / 2)
+    .attr('y', graphHeight + margin.bottom - 10)
+    .style('text-anchor', 'middle')
+    .text('Year');
+
+  //Draw y-axis label
+  graph
+    .append('text')
+    .classed('y-label', true)
+    .attr('transform', 'rotate(-90)')
+    .attr('y', 0 - margin.left)
+    .attr('x', 0 - (graphHeight / 2))
+    .attr('dy', '1em')
+    .style('text-anchor', 'middle')
+    .text('Population');
 }
 
 //Function draws line when map county is clicked
 function drawLine(countyData) {
+  let graph = d3.select('svg.line');
+  let margin = { top: 50, right: 50, bottom: 50, left: 75 };
+  let graphWidth = (+graph.attr('width') - margin.left - margin.right);
+  let graphHeight = (+graph.attr('height') - margin.top - margin.bottom);
+
   //Scales
-  let xScale = d3.scaleLinear().range([0, lineWidth]);
-  let yScale = d3.scaleLinear().range([lineHeight, 0]);
+  let xScale = d3.scaleLinear().range([0, graphWidth]);
+  let yScale = d3.scaleLinear().range([graphHeight, 0]);
 
   //Line
   let line = d3.line()
     .x(function (d) {return xScale(d.year);})
     .y(function (d) {return yScale(d.population);});
 
-  //Set domain
-  xScale.domain(d3.extent(countyData.countyPopData, function (d) {return d.year;}));
+  //Scales
+  xScale = d3.scaleLinear()
+    .domain(d3.extent(countyData.countyPopData, d => d.year))
+    .range([0, graphWidth]);
 
-  yScale.domain(d3.extent(countyData.countyPopData, function (d) {return d.population;}));
+  yScale = d3.scaleLinear()
+    .domain(d3.extent(countyData.countyPopData, d => d.population))
+    .range([graphHeight, 0]);
 
-  graph.append('g')
-    .attr('transform', 'translate(0,' + lineHeight + ')')
-    .classed('axis', true)
-    .call(d3.axisBottom(xScale));
+  //SVG
+  graph
+    .attr('width', graphWidth + margin.left + margin.right)
+    .attr('height', graphHeight + margin.top + margin.bottom);
 
-  graph.append('g')
-  .classed('axis', true)
+  //X Axis
+  graph
+    .select('.x-axis')
+      .attr('transform', 'translate(0,' + graphHeight + ')')
+      .call(d3.axisBottom(xScale).ticks(7).tickFormat(d3.format('.0f')));
+
+  //Y Axis
+  graph
+  .select('.y-axis')
     .call(d3.axisLeft(yScale));
 
-  let dataArr = [countyData.countyPopData];
-
-  graph.append('path')
-    .data(dataArr)
-    .attr('class', 'line')
-    .attr('d', line);
+  //Line
+  graph
+    .select('.line')
+      .data([countyData.countyPopData])
+      .attr('d', line);
 }

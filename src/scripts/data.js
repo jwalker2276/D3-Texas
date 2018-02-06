@@ -33,9 +33,15 @@ function ready(error, mapData, popData) {
     counties.forEach(county => county.properties = row);
   });
 
-  createMap();
+  //Width and height of graphs
+  let width = +d3.select('.container').node().offsetWidth;
+  let height = +d3.select('.container').node().offsetWidth;
+
+  console.log(width, height);
+
+  createMap(width, height);
   drawMap(geoData);
-  createLineGraph(geoData);
+  createLineGraph(geoData, width, height);
 
   //************************************************
   //**App Header************************************
