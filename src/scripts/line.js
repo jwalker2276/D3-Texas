@@ -80,6 +80,12 @@ function drawLine(countyData) {
     .x(function (d) {return xScale(d.year);})
     .y(function (d) {return yScale(d.population);});
 
+  let tLine = d3.transition()
+    .duration(500)
+    .ease(d3.easeLinear);
+
+  let tAxis = d3.transition();
+
   //Scales
   xScale = d3.scaleLinear()
     .domain(d3.extent(countyData.countyPopData, d => d.year))
@@ -101,13 +107,16 @@ function drawLine(countyData) {
       .call(d3.axisBottom(xScale).ticks(7).tickFormat(d3.format('.0f')));
 
   //Y Axis
+  // TODO: fix y-axis scaling
   graph
   .select('.y-axis')
+    .transition(tAxis)
     .call(d3.axisLeft(yScale));
 
   //Line
   graph
     .select('.line')
       .data([countyData.countyPopData])
+      .transition(tLine)
       .attr('d', line);
 }
