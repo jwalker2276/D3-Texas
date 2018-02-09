@@ -15,10 +15,11 @@ d3.queue()
       years: [2010, 2011, 2012, 2013, 2014, 2015, 2016],
     };
   })
+  .defer(d3.csv, 'data/texas_population_state.csv')
   .await(ready);
 
 //Primary function for svgs and data
-function ready(error, mapData, popData) {
+function ready(error, mapData, popData, stateData) {
   if (error) throw error;
 
   //Convert topojson to json data
@@ -33,25 +34,38 @@ function ready(error, mapData, popData) {
     counties.forEach(county => county.properties = row);
   });
 
-  //Width and height of graphs
-  let width = +d3.select('.container').node().offsetWidth;
-  let height = +d3.select('.container').node().offsetWidth;
+  //State population data
+  let statePopulation = {
+    census10: stateData[1].rescen42010,
+    pop11: stateData[1].respop72011,
+    pop12: stateData[1].respop72012,
+    pop13: stateData[1].respop72013,
+    pop14: stateData[1].respop72014,
+    pop15: stateData[1].respop72015,
+    pop16: stateData[1].respop72016,
+    pop17: stateData[1].respop72017,
+  };
 
-  console.log(width, height);
+  //Width and height of map
+  let mapWidth = +d3.select('.map').node().offsetWidth;
+  let mapHeight = +d3.select('.map').node().offsetHeight;
 
-  createMap(width, height);
-  drawMap(geoData);
-  createLineGraph(geoData, width, height);
-
-  //************************************************
-  //**App Header************************************
-  //************************************************
+  //Width and height of line graph
+  let graphWidth = +d3.select('.line-chart').node().offsetWidth;
+  let graphHeight = +d3.select('.line-chart').node().offsetHeight;
 
   //Parameters for input selector
   let years = d3.extent(geoData, d => d.year);
-  let currentYear = undefined;
   let minYear = geoData[0].properties.years[0];
   let maxYear = geoData[0].properties.years[geoData[0].properties.years.length - 1];
+  let selectedYear = minYear;
+  let countyInfo = undefined;
+
+  displayInfo(selectedYear, countyInfo);
+  createMap(mapWidth, mapHeight);
+  drawMap(geoData);
+  setColor('pop' + minYear, popData);
+  createLineGraph(geoData, graphWidth, graphHeight);
 
   //Year input selector
   d3.select('.year')
@@ -59,44 +73,9 @@ function ready(error, mapData, popData) {
     .property('max', maxYear)
     .property('value', minYear)
     .on('input', () => {
-      currentYear = +d3.event.target.value;
-      setColor('pop' + currentYear);
-      setYear(currentYear);
+      selectedYear = +d3.event.target.value;
+      setColor('pop' + selectedYear, popData);
+      displayInfo(selectedYear);
     });
 
-  //Run functions with initial values
-  setColor('pop' + minYear);
-  setYear(minYear);
-
-  //Set color of counties
-  function setColor(val) {
-    let colorRanges = {
-      pop2010: ['blue', 'red'],
-      pop2011: ['white', 'purple'],
-      pop2012: ['white', 'purple'],
-      pop2013: ['white', 'purple'],
-      pop2014: ['white', 'purple'],
-      pop2015: ['white', 'purple'],
-      pop2016: ['white', 'purple'],
-    };
-    let scale = d3.scaleLinear()
-      .domain([0, d3.max(popData, d => d[val])])
-      .range(colorRanges[val]);
-
-    //Set transitions and apply colors to map
-    d3.selectAll('.county')
-      .transition()
-      .duration(750)
-      .ease(d3.easeBackIn)
-      .attr('fill', d => {
-        let data = d.properties[val];
-        return data ? scale(data) : '#ccc';
-      });
-  }
-
-  //Set year on header
-  function setYear(year) {
-    let yearDisplay = d3.select('.pop-year');
-    yearDisplay.text(year);
-  }
 }

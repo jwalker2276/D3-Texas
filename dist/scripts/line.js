@@ -1,7 +1,7 @@
 function createLineGraph(geoData, width, height) {
   //Parameters for svg element
-  let margin = { top: 50, right: 50, bottom: 50, left: 75 };
-  let graphWidth = ((width / 2) - margin.left - margin.right);
+  let margin = { top: 50, right: 50, bottom: 50, left: 90 };
+  let graphWidth = ((width) - margin.left - margin.right);
   let graphHeight = ((height / 2) - margin.top - margin.bottom);
 
   let xScale = d3.scaleLinear().range([0, graphWidth]);

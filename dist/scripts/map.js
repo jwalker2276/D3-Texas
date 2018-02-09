@@ -19,7 +19,7 @@ function drawMap(geoData) {
 
   let projection = d3.geoAlbers()
     .scale(mapScaleFactor)
-    .translate([mapWidth / 1.6, 0]);
+    .translate([mapWidth / 1.45, -40]);
 
   //Apply projection to path data
   let geoPath = d3.geoPath()
@@ -38,7 +38,37 @@ function drawMap(geoData) {
 }
 
 //************************************************
-//**Helper function for on click event*******************
+//**Update Colors for Map*************************
+//************************************************
+
+//Set color of counties
+function setColor(val, popData) {
+  let colorRanges = {
+    pop2010: ['blue', 'red'],
+    pop2011: ['white', 'purple'],
+    pop2012: ['white', 'purple'],
+    pop2013: ['white', 'purple'],
+    pop2014: ['white', 'purple'],
+    pop2015: ['white', 'purple'],
+    pop2016: ['white', 'purple'],
+  };
+  let scale = d3.scaleLinear()
+    .domain([0, d3.max(popData, d => d[val])])
+    .range(colorRanges[val]);
+
+  //Set transitions and apply colors to map
+  d3.selectAll('.county')
+    .transition()
+    .duration(750)
+    .ease(d3.easeBackIn)
+    .attr('fill', d => {
+      let data = d.properties[val];
+      return data ? scale(data) : '#ccc';
+    });
+}
+
+//************************************************
+//**Helper function for on click event************
 //************************************************
 
 function getCountyData(d) {

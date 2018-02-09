@@ -1,41 +1,39 @@
 html, body {
   padding: 0;
   margin: 0;
-  width: 100vw;
-  height: 100vh;
 }
 
-header {
-  text-align: center;
-  border: 2px solid blue;
-  background-color: darkblue;
-  color: white;
+* {
+  border: 1px solid black;
 }
 
 .container {
-  border: 2px solid red;
   width: 100vw;
-  height: 80vh;
-  box-sizing: border-box;
+  height: 90vh;
   display: flex;
+  justify-content: center;
+}
+
+.info {
+  background-color: orange;
+  flex-basis: 25%;
+  text-align: center;
 }
 
 .map {
-  border: 2px solid yellow;
-  width: 50vw;
-  height: 100%;
-  box-sizing: border-box;
+  flex-basis: 50%;
+  /* width: 50vw;
+  height: 100%; */
+  background-color: gray;
 }
 
-.side-charts {
-  width: 50vw;
-  border: 2px solid black;
-  box-sizing: border-box;
+.line-chart {
+  flex-basis: 25%;
+  background-color: red;
 }
 
-svg {
-  display: block;
-}
+
+
 
 path {
   stroke: #ccc;
@@ -67,13 +65,14 @@ path {
 }
 
 /* Line graph */
+
 .line {
   stroke: black;
   fill: none;
   stroke-width: 1px;
 }
 
-.x-axis path, .y-axis path{
+.x-axis path, .y-axis path {
   stroke: black;
   stroke-width: 1px;
 }
