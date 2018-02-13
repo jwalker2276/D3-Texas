@@ -16,7 +16,6 @@
         <h2>Estimated Populations of Texas</h2>
         <p>Explore Populations by year.</p>
         <p>Click on a county to see more info.</p>
-        <p>2010 Census recorded Texas population at : 25,145,561</p>
 
         <div class="input">
           <p>Current year : <span class='selected-year'></span></p>
@@ -34,10 +33,43 @@
       </div>
 
       <div class="line-chart">
-        <div class="countyInfo">
-          <span class="county-name"></span> estimated population at <span class="county-selected-year"></span>.</p>
+        <div class="countyInfo hidden">
+          <h2>Estimated Populations of <span class='county-name'></span>.</h2>
+          <table class="county-data-table">
+            <tr>
+              <th>Year</th>
+              <th>Population</th>
+            </tr>
+            <tr>
+              <td>2010</td>
+              <td class="population10"></td>
+            </tr>
+            <tr>
+              <td>2011</td>
+              <td class="population11"></td>
+            </tr>
+            <tr>
+              <td>2012</td>
+              <td class="population12"></td>
+            </tr>
+            <tr>
+              <td>2013</td>
+              <td class="population13"></td>
+            </tr>
+            <tr>
+              <td>2014</td>
+              <td class="population14"></td>
+            </tr>
+            <tr>
+              <td>2015</td>
+              <td class="population15"></td>
+            </tr>
+            <tr>
+              <td>2016</td>
+              <td class="population16"></td>
+            </tr>
+          </table>
         </div>
-        <!-- TODO: need a table to display all years not just current -->
 
         <svg
           version="1.1"
@@ -52,7 +84,6 @@
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
     <script src="dist/scripts/data.js"></script>
-    <script src="dist/scripts/info.js"></script>
     <script src="dist/scripts/map.js"></script>
     <script src="dist/scripts/line.js"></script>
   </body>

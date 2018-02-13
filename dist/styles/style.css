@@ -39,7 +39,9 @@ html, body {
   background-color: red;
 }
 
-
+.hidden {
+  display: none;
+}
 
 
 path {

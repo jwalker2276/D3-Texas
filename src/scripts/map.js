@@ -19,7 +19,7 @@ function drawMap(geoData) {
 
   let projection = d3.geoAlbers()
     .scale(mapScaleFactor)
-    .translate([mapWidth / 1.45, -40]);
+    .translate([mapWidth, -40]);
 
   //Apply projection to path data
   let geoPath = d3.geoPath()
@@ -101,6 +101,7 @@ function getCountyData(d) {
       ],
     };
     drawLine(countyData);
+    displayCountyInfo(countyData);
   }
 }
 

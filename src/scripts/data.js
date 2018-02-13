@@ -59,9 +59,10 @@ function ready(error, mapData, popData, stateData) {
   let minYear = geoData[0].properties.years[0];
   let maxYear = geoData[0].properties.years[geoData[0].properties.years.length - 1];
   let selectedYear = minYear;
-  let countyInfo = undefined;
+  let countyData = undefined;
 
-  displayInfo(selectedYear, countyInfo);
+  displayTexasInfo(selectedYear, statePopulation);
+  displayCountyInfo(countyData);
   createMap(mapWidth, mapHeight);
   drawMap(geoData);
   setColor('pop' + minYear, popData);
@@ -75,7 +76,40 @@ function ready(error, mapData, popData, stateData) {
     .on('input', () => {
       selectedYear = +d3.event.target.value;
       setColor('pop' + selectedYear, popData);
-      displayInfo(selectedYear);
+      displayTexasInfo(selectedYear);
     });
+}
 
+function displayCountyInfo(countyData) {
+  //Select Div
+  let countyInfoDiv = document.querySelector('.countyInfo');
+
+  //Check for a selected county
+  if (countyData !== undefined) {
+    let countyName = countyData.countyName;
+    let countyDataArray = countyData.countyPopData;
+
+    //Map population array and format string
+    let popArr = countyDataArray.map(row => row.population.toLocaleString());
+
+    //Remove class hiding div
+    countyInfoDiv.classList.remove('hidden');
+
+    //Update elements
+    let name = document.querySelector('.county-name').innerHTML = countyName;
+    let year10 = document.querySelector('.population10').innerHTML = popArr[0];
+    let year11 = document.querySelector('.population11').innerHTML = popArr[1];
+    let year12 = document.querySelector('.population12').innerHTML = popArr[2];
+    let year13 = document.querySelector('.population13').innerHTML = popArr[3];
+    let year14 = document.querySelector('.population14').innerHTML = popArr[4];
+    let year15 = document.querySelector('.population15').innerHTML = popArr[5];
+    let year16 = document.querySelector('.population16').innerHTML = popArr[6];
+  }
+}
+
+function displayTexasInfo(selectedYear, statePopulation) {
+  let yearSelectedDisplay = document.querySelector('.selected-year');
+  yearSelectedDisplay.innerHTML = selectedYear;
+
+  console.log(statePopulation);
 }
