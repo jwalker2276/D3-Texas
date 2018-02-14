@@ -3,34 +3,30 @@ html, body {
   margin: 0;
 }
 
-.container {
+.page-container {
   width: 100vw;
   height: 100vh;
   display: flex;
-  justify-content: center;
-}
-
-.info {
-  flex-basis: 25%;
-  text-align: center;
-}
-
-.map {
-  flex-basis: 50%;
-}
-
-.line-chart {
-  flex-basis: 25%;
 }
 
 .hidden {
   display: none;
 }
 
+.line-chart {
+  stroke: black;
+  fill: none;
+  stroke-width: .5px;
+}
 
 path {
   stroke: #ccc;
   stroke-width: 0.25px;
+}
+
+.x-axis path, .y-axis path {
+  stroke: black;
+  stroke-width: 1px;
 }
 
 .tooltip {
@@ -55,17 +51,4 @@ path {
   top: -30px;
   left: 50%;
   margin-left: -6px;
-}
-
-/* Line graph */
-
-.line {
-  stroke: black;
-  fill: none;
-  stroke-width: 1px;
-}
-
-.x-axis path, .y-axis path {
-  stroke: black;
-  stroke-width: 1px;
 }

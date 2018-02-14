@@ -18,7 +18,7 @@ function createLineGraph(geoData, width, height) {
     .range([graphHeight, 0]);
 
   //Setup Graph
-  let graph = d3.select('svg.line')
+  let graph = d3.select('svg.line-chart')
     .attr('width', graphWidth + margin.left + margin.right)
     .attr('height', graphHeight + margin.top + margin.bottom)
   .append('g')
@@ -41,7 +41,7 @@ function createLineGraph(geoData, width, height) {
   //Create line
   graph
     .append('path')
-    .classed('line', true);
+    .classed('line-chart', true);
 
   //Draw x-axis label
   graph
@@ -66,7 +66,7 @@ function createLineGraph(geoData, width, height) {
 
 //Function draws line when map county is clicked
 function drawLine(countyData) {
-  let graph = d3.select('svg.line');
+  let graph = d3.select('svg.line-chart');
   let margin = { top: 50, right: 50, bottom: 50, left: 75 };
   let graphWidth = (+graph.attr('width') - margin.left - margin.right);
   let graphHeight = (+graph.attr('height') - margin.top - margin.bottom);
@@ -115,7 +115,7 @@ function drawLine(countyData) {
 
   //Line
   graph
-    .select('.line')
+    .select('.line-chart')
       .data([countyData.countyPopData])
       .transition(tLine)
       .attr('d', line);

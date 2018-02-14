@@ -52,8 +52,8 @@ function ready(error, mapData, popData, stateData) {
   let mapHeight = +d3.select('.map').node().offsetHeight;
 
   //Width and height of line graph
-  let graphWidth = +d3.select('.line-chart').node().offsetWidth;
-  let graphHeight = +d3.select('.line-chart').node().offsetHeight;
+  let graphWidth = +d3.select('.graph').node().offsetWidth;
+  let graphHeight = +d3.select('.graph').node().offsetHeight;
 
   //Parameters for input selector
   let years = d3.extent(geoData, d => d.year);
@@ -83,7 +83,7 @@ function ready(error, mapData, popData, stateData) {
 
 function displayCountyInfo(countyData) {
   //Select Div
-  let countyInfoDiv = document.querySelector('.countyInfo');
+  let countyInfoDiv = document.querySelector('.county-info');
 
   //Check for a selected county
   if (countyData !== undefined) {

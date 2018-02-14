@@ -16,7 +16,7 @@ function drawMap(geoData) {
   let mapWidth = +map.attr('width') / 2;
   let mapHeight = +map.attr('height') / 2;
   let mapScaleFactor = mapWidth * 7;
-  
+
   //Properties to fix map center
   let widthOffset = mapWidth * .30;
   let heightOffset = mapHeight * .15;
