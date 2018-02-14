@@ -36,14 +36,15 @@ function ready(error, mapData, popData, stateData) {
 
   //State population data
   let statePopulation = {
-    census10: stateData[1].rescen42010,
-    pop11: stateData[1].respop72011,
-    pop12: stateData[1].respop72012,
-    pop13: stateData[1].respop72013,
-    pop14: stateData[1].respop72014,
-    pop15: stateData[1].respop72015,
-    pop16: stateData[1].respop72016,
-    pop17: stateData[1].respop72017,
+    census: stateData[1].rescen42010,
+    2010: stateData[1].rescen42010,
+    2011: stateData[1].respop72011,
+    2012: stateData[1].respop72012,
+    2013: stateData[1].respop72013,
+    2014: stateData[1].respop72014,
+    2015: stateData[1].respop72015,
+    2016: stateData[1].respop72016,
+    2017: stateData[1].respop72017,
   };
 
   //Width and height of map
@@ -76,7 +77,7 @@ function ready(error, mapData, popData, stateData) {
     .on('input', () => {
       selectedYear = +d3.event.target.value;
       setColor('pop' + selectedYear, popData);
-      displayTexasInfo(selectedYear);
+      displayTexasInfo(selectedYear, statePopulation);
     });
 }
 
@@ -108,8 +109,13 @@ function displayCountyInfo(countyData) {
 }
 
 function displayTexasInfo(selectedYear, statePopulation) {
-  let yearSelectedDisplay = document.querySelector('.selected-year');
-  yearSelectedDisplay.innerHTML = selectedYear;
+  let yearSelectedDisplays = document.querySelectorAll('.selected-year');
+  yearSelectedDisplays[0].innerHTML = selectedYear;
+  yearSelectedDisplays[1].innerHTML = selectedYear;
 
-  console.log(statePopulation);
+  let censusNumDisplay = document.querySelector('.census-num');
+  censusNumDisplay.innerHTML = (+statePopulation.census).toLocaleString();
+
+  let populationNumDisplay = document.querySelector('.estimate');
+  populationNumDisplay.innerHTML = (+statePopulation[selectedYear]).toLocaleString();
 }
