@@ -1,5 +1,5 @@
 function createMap(width, height) {
-  let map = d3.select('svg.map');
+  let map = d3.select('.map svg');
   let mapWidth = width;
   let mapHeight = height;
 
@@ -11,27 +11,31 @@ function createMap(width, height) {
 
 //Draw Map
 function drawMap(geoData) {
-  const map = d3.select('svg.map');
-  const mapScaleFactor = 3000;
+  const map = d3.select('.map svg');
 
   let mapWidth = +map.attr('width') / 2;
   let mapHeight = +map.attr('height') / 2;
+  let mapScaleFactor = mapWidth * 7;
+  
+  //Properties to fix map center
+  let widthOffset = mapWidth * .30;
+  let heightOffset = mapHeight * .15;
 
   let projection = d3.geoAlbers()
-    .scale(mapScaleFactor)
-    .translate([mapWidth, -40]);
+    .translate([mapWidth + widthOffset, heightOffset])
+    .scale(mapScaleFactor);
 
   //Apply projection to path data
   let geoPath = d3.geoPath()
     .projection(projection);
 
   map
-    .selectAll('.county') //Select all paths with class .county
-    .data(geoData) //Get data ready
-    .enter() //Change to enter state
-    .append('path') //Add paths
-      .classed('county', true) //Apply classes to paths
-      .attr('d', geoPath) //Add path and filter data to paths
+    .selectAll('.county')
+    .data(geoData)
+    .enter()
+    .append('path')
+      .classed('county', true)
+      .attr('d', geoPath)
     .on('touchstart click', getCountyData)
     .on('mousemove touchmove', showTooltip)
     .on('mouseout touchend', hideTooltip);

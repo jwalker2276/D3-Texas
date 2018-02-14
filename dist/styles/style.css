@@ -3,13 +3,9 @@ html, body {
   margin: 0;
 }
 
-* {
-  border: 1px solid black;
-}
-
 .container {
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -19,7 +15,6 @@ html, body {
 }
 
 .info {
-  background-color: orange;
   -ms-flex-preferred-size: 25%;
       flex-basis: 25%;
   text-align: center;
@@ -28,15 +23,11 @@ html, body {
 .map {
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
-  /* width: 50vw;
-  height: 100%; */
-  background-color: gray;
 }
 
 .line-chart {
   -ms-flex-preferred-size: 25%;
       flex-basis: 25%;
-  background-color: red;
 }
 
 .hidden {

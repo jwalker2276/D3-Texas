@@ -3,33 +3,24 @@ html, body {
   margin: 0;
 }
 
-* {
-  border: 1px solid black;
-}
-
 .container {
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
 }
 
 .info {
-  background-color: orange;
   flex-basis: 25%;
   text-align: center;
 }
 
 .map {
   flex-basis: 50%;
-  /* width: 50vw;
-  height: 100%; */
-  background-color: gray;
 }
 
 .line-chart {
   flex-basis: 25%;
-  background-color: red;
 }
 
 .hidden {
