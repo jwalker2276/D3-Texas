@@ -83,7 +83,7 @@ function ready(error, mapData, popData, stateData) {
 
 function displayCountyInfo(countyData) {
   //Select Div
-  let countyInfoDiv = document.querySelector('.county-info');
+  const countyInfo = document.querySelector('.county-info');
 
   //Check for a selected county
   if (countyData !== undefined) {
@@ -94,7 +94,7 @@ function displayCountyInfo(countyData) {
     let popArr = countyDataArray.map(row => row.population.toLocaleString());
 
     //Remove class hiding div
-    countyInfoDiv.classList.remove('hidden');
+    countyInfo.classList.remove('hidden');
 
     //Update elements
     let name = document.querySelector('.county-name').innerHTML = countyName;
@@ -111,10 +111,10 @@ function displayCountyInfo(countyData) {
 function displayTexasInfo(selectedYear, statePopulation) {
   let yearSelectedDisplays = document.querySelectorAll('.selected-year');
   yearSelectedDisplays[0].innerHTML = selectedYear;
-  yearSelectedDisplays[1].innerHTML = selectedYear;
+  //yearSelectedDisplays[1].innerHTML = selectedYear;
 
-  let censusNumDisplay = document.querySelector('.census-num');
-  censusNumDisplay.innerHTML = (+statePopulation.census).toLocaleString();
+  // let censusNumDisplay = document.querySelector('.census-num');
+  // censusNumDisplay.innerHTML = (+statePopulation.census).toLocaleString();
 
   let populationNumDisplay = document.querySelector('.estimate');
   populationNumDisplay.innerHTML = (+statePopulation[selectedYear]).toLocaleString();

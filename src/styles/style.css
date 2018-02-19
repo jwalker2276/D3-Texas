@@ -1,13 +1,115 @@
-html, body {
-  padding: 0;
-  margin: 0;
+ :root {
+  --yellow: #ffc600;
+  --black: #272727;
 }
 
-.page-container {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
+html, body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
+/* Page Grid */
+.page-container {
+  height: 95vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: auto 7% 1fr 1fr 5%;
+  grid-template-areas:
+    'header header'
+    'info-input population'
+    'map table'
+    'map graph'
+    'footer footer';
+}
+
+/* Header */
+header {
+  grid-column: 1 / 2;
+  justify-self: center;
+  align-self: center;
+  text-align: center;
+}
+
+/* Map Controls */
+.info-input {
+  grid-area: info-input;
+  display: grid;
+  grid-template-columns: 20% auto 20%;
+  grid-template-rows: 1fr;
+  grid-template-areas:
+    'label1 input year';
+  justify-items: center;
+  align-items: center;
+}
+
+
+.label-heatmap {
+  grid-area: label1;
+}
+
+input {
+  grid-area: input;
+}
+
+.info-year {
+  grid-area: year;
+}
+/* End of map controls */
+
+/* Map*/
+.map {
+  grid-area: map;
+}
+
+/* Side Bar */
+.texas-info {
+  grid-area: population;
+  align-self: center;
+  justify-self: center;
+}
+
+
+.county-info {
+  grid-area: table;
+  display: grid;
+  grid-template-areas:
+    'header'
+    'table';
+  text-align: center;
+  justify-content: space-around;
+}
+
+.county-data-table {
+
+}
+
+
+/* Line Graph */
+.graph {
+  grid-area: graph;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .hidden {
   display: none;
