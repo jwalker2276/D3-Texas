@@ -4,6 +4,7 @@
   --other-bk: #9fb1bc;
   --font: #ecebe4;
   --accent: #ef2b2d;
+  --marginAmount: 10px;
 }
 
 html {
@@ -39,9 +40,14 @@ body {
 .tile {
   background-color: var(--tile-bk);
   text-align: center;
-  margin: 10px;
+  margin-top: var(--marginAmount);
+  margin-left: var(--marginAmount);
   align-items: center;
   justify-items: center;
+}
+
+.margin-right {
+  margin-right: var(--marginAmount);
 }
 
 /* Header */
@@ -63,11 +69,12 @@ header {
 /* Map Controls */
 .info-input {
   grid-area: info-input;
+  align-content: center;
   display: grid;
   grid-template-columns: 20% auto 20%;
   grid-template-rows: 1fr;
   grid-template-areas:
-    'label1 input year';;
+    'label1 input year';
 }
 
 .label-heatmap {
@@ -96,13 +103,27 @@ input {
 .county-info {
   grid-area: table;
   display: grid;
+  grid-template-rows: auto 1fr;
   grid-template-areas:
     'header'
     'table';
 }
 
-.county-data-table {
-  ;
+.county-data-table{
+  justify-self: stretch;
+  align-self: stretch;
+
+  display: grid;
+  grid-gap: 2px;
+  grid-template-areas:
+    'year pop'
+    'year0 pop0'
+    'year1 pop1'
+    'year2 pop2'
+    'year3 pop3'
+    'year4 pop4'
+    'year5 pop5'
+    'year6 pop6';
 }
 
 /* Line Graph */
@@ -112,6 +133,7 @@ input {
 
 footer {
   grid-area: footer;
+  margin-bottom: var(--marginAmount);
 }
 /* End of layout styles */
 
