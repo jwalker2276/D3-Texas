@@ -12,21 +12,26 @@
 <body>
   <section class='page-container'>
 
-    <header>
+    <header class="tile">
       <h2>Estimated Populations of Texas</h2>
       <p>By the US Census</p>
     </header>
 
-    <div class="info-input">
+    <div class="tile data">
+      <button type="button" name="button">See Data</button>
+    </div>
+
+    <div class="tile info-input">
       <h3 class="label-heatmap">Heatmap selector</h3>
-      <!-- <p class="label-year">Year</p> -->
       <input class='year' type='range' step='1'>
       <p class='info-year'>Year: <span class='selected-year'></span></p>
     </div>
 
-    <p class="texas-info">Estimated State Population <span class='estimate'></span></p>
+    <div class="tile texas-info">
+      <p>Estimated State Population <span class='estimate'></span></p>
+    </div>
 
-    <div class="map">
+    <div class="tile map">
       <svg
       version="1.1"
       baseProfile="full"
@@ -34,7 +39,7 @@
       </svg>
     </div>
 
-    <div class="county-info hidden">
+    <div class="tile county-info">
       <h3>Estimated Populations of <span class='county-name'></span>.</h3>
       <table class="county-data-table">
         <tr>
@@ -71,7 +76,7 @@
       </table>
     </div>
 
-    <div class="graph">
+    <div class="tile graph">
       <svg
         version="1.1"
         baseProfile="full"
@@ -79,6 +84,10 @@
         class="line-chart">
       </svg>
     </div>
+
+    <footer class="tile">
+      Created By Jordan Walker
+    </footer>
 
   </section>
 

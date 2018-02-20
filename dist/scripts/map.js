@@ -13,17 +13,48 @@ function createMap(width, height) {
 function drawMap(geoData) {
   const map = d3.select('.map svg');
 
-  let mapWidth = +map.attr('width') / 2;
-  let mapHeight = +map.attr('height') / 2;
-  let mapScaleFactor = mapWidth * 7;
+  let mapWidth = +map.attr('width');
+  let mapHeight = +map.attr('height');
 
-  //Properties to fix map center
-  let widthOffset = mapWidth * .30;
-  let heightOffset = mapHeight * .15;
+  let scaleFactor = 5;
+  let xOffset = 0;
+  let yOffset = 0;
+
+  console.log(mapWidth);
+
+  //Media Queries for map
+  if (mapWidth >= 1687) {
+    //console.log('setting to your monitor cost to much');
+    xOffset = mapWidth / 1.75;
+    yOffset = -60;
+    scaleFactor = 3;
+  } else if (mapWidth >= 1260) {
+    //console.log('setting to desktopXLarge');
+    xOffset = mapWidth / 2 + 150;
+    yOffset = -50;
+    scaleFactor = 5;
+  } else if (mapWidth >= 940) {
+    //console.log('setting to desktopLarge');
+    xOffset = mapWidth / 1.6;
+    yOffset = -40;
+    scaleFactor = 5;
+  } else if (mapWidth >= 663) {
+    //console.log('setting to laptop');
+    xOffset = mapWidth / 1.5;
+    yOffset = -25;
+    scaleFactor = 7;
+  } else if (mapWidth >= 428) {
+    //console.log('setting to tablet');
+    xOffset = mapWidth / 1.39;
+    yOffset = 0;
+    scaleFactor = 9;
+  }
+
+  let scaleAmount = (mapWidth / 2) * scaleFactor;
 
   let projection = d3.geoAlbers()
-    .translate([mapWidth + widthOffset, heightOffset])
-    .scale(mapScaleFactor);
+    .translate([xOffset, yOffset])
+    .scale(scaleAmount);
 
   //Apply projection to path data
   let geoPath = d3.geoPath()
