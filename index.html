@@ -7,6 +7,7 @@
   <meta name="author" content="Jordan Walker">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/dist/styles/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Oxygen:300,400,700" rel="stylesheet">
 </head>
 
 <body>
@@ -42,26 +43,27 @@
     <div class="tile margin-right county-info">
       <h3>Estimated Populations of <span class='county-name'></span>.</h3>
       <div class="county-data-table">
-        <div class="">Year</div>
-        <div class="">Population</div>
-        <div class="">2010</div>
-        <div class="population10"></div>
-        <div class="">2011</div>
-        <div class="population11"></div>
-        <div class="">2012</div>
-        <div class="population12"></div>
-        <div class="">2013</div>
-        <div class="population13"></div>
-        <div class="">2014</div>
-        <div class="population14"></div>
-        <div class="">2015</div>
-        <div class="population15"></div>
-        <div class="">2016</div>
-        <div class="population16"></div>
+        <div class="table-heading">Year</div>
+        <div class="table-heading">Population</div>
+        <div class="table-data">2010</div>
+        <div class="table-data population10"></div>
+        <div class="table-data">2011</div>
+        <div class="table-data population11"></div>
+        <div class="table-data">2012</div>
+        <div class="table-data population12"></div>
+        <div class="table-data">2013</div>
+        <div class="table-data population13"></div>
+        <div class="table-data">2014</div>
+        <div class="table-data population14"></div>
+        <div class="table-data">2015</div>
+        <div class="table-data population15"></div>
+        <div class="table-data">2016</div>
+        <div class="table-data population16"></div>
       </div>
     </div>
 
     <div class="tile margin-right graph">
+      <h3>Estimated Population Change Over Time</h3>
       <svg
         version="1.1"
         baseProfile="full"
@@ -71,12 +73,13 @@
     </div>
 
     <footer class="tile margin-right">
-      Created By Jordan Walker
+      <p>Created By Jordan Walker</p>
     </footer>
 
   </section>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script src="https://unpkg.com/topojson@3"></script>
     <script src="dist/scripts/data.js"></script>
     <script src="dist/scripts/map.js"></script>

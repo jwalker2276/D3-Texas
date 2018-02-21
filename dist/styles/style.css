@@ -1,9 +1,9 @@
  :root {
-  --main-bk: #2e5266;
-  --tile-bk: #6e8898;
-  --other-bk: #9fb1bc;
-  --font: #ecebe4;
-  --accent: #ef2b2d;
+  --main-bk: #939393;
+  --tile-bk: #343435;
+  --tile-head: #4b4b4b;
+  --font: #e6e6e6;
+  --accent: #084887;
   --marginAmount: 10px;
 }
 
@@ -15,6 +15,8 @@ html {
 }
 
 body {
+  font-family: 'Oxygen', sans-serif;
+  font-size: 16px;
   background-color: var(--main-bk);
   color: var(--font);
   width: 100vw;
@@ -58,6 +60,17 @@ header {
   grid-column: 1 / 2;
 }
 
+/* Title */
+header > h2 {
+  font-weight: 700;
+  font-size: 2em;
+}
+
+header > p {
+  font-weight: 300;
+  font-size: 1em;
+}
+
 /* Data Btn */
 .data {
   grid-area: data-btn;
@@ -85,8 +98,22 @@ header {
     'label1 input year';
 }
 
+/* Title */
 .label-heatmap {
+  font-size: 1.5em;
+  font-weight: 400;
   grid-area: label1;
+}
+
+/* Year */
+.info-input > p {
+  font-size: 1.5em;
+  font-weight: 400;
+}
+
+.selected-year {
+  font-size: 1.25em;
+  font-weight: 400;
 }
 
 input {
@@ -106,6 +133,17 @@ input {
 /* Side Bar */
 .texas-info {
   grid-area: population;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.texas-info > p {
+  font-size: 1.5em;
+  font-weight: 400;
 }
 
 .county-info {
@@ -117,10 +155,15 @@ input {
     'table';
 }
 
+.county-info > h3 {
+  font-size: 1.25em;
+  font-weight: 400;
+  margin: 10px;
+}
+
 .county-data-table{
   justify-self: stretch;
   align-self: stretch;
-
   display: grid;
   grid-gap: 2px;
   grid-template-areas:
@@ -134,38 +177,72 @@ input {
     'year6 pop6';
 }
 
+.table-heading {
+  font-size: 1.5em;
+  font-weight: 300;
+}
+
+.table-data {
+  font-size: 1em;
+  font-weight: 300;
+}
+
 /* Line Graph */
 .graph {
+  grid-area: graph;
+  display: grid;
+  grid-template-rows: 10% 1fr;
+  grid-template-areas:
+    'header'
+    'graph';
+}
+
+.graph > h3 {
+  grid-area: header;
+}
+
+.graph > line-chart {
   grid-area: graph;
 }
 
 footer {
   grid-area: footer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   margin-bottom: var(--marginAmount);
 }
-/* End of layout styles */
 
+footer > p {
+  font-size: 1em;
+  font-weight: 400;
+}
+/* End of layout styles */
 
 .hidden {
   display: none;
 }
 
 .line-chart {
-  stroke: black;
+  stroke: var(--font);
   fill: none;
   stroke-width: .5px;
 }
 
 path {
-  stroke: #ccc;
-  stroke-width: 0.25px;
+  stroke: var(--font);
+  stroke-width: 0.50px;
 }
 
 .x-axis path, .y-axis path {
-  stroke: black;
+  stroke: var(--font);
   stroke-width: 1px;
 }
 
+/* Tooltip Styles */
 .tooltip {
   opacity: 0;
   position: absolute;

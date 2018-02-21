@@ -20,8 +20,6 @@ function drawMap(geoData) {
   let xOffset = 0;
   let yOffset = 0;
 
-  console.log(mapWidth);
-
   //Media Queries for map
   if (mapWidth >= 1687) {
     //console.log('setting to your monitor cost to much');
@@ -79,7 +77,7 @@ function drawMap(geoData) {
 //Set color of counties
 function setColor(val, popData) {
   let colorRanges = {
-    pop2010: ['blue', 'red'],
+    pop2010: ['#ffffff', '#ff0000'],
     pop2011: ['white', 'purple'],
     pop2012: ['white', 'purple'],
     pop2013: ['white', 'purple'],
@@ -87,8 +85,12 @@ function setColor(val, popData) {
     pop2015: ['white', 'purple'],
     pop2016: ['white', 'purple'],
   };
+
+  let minValue = d3.min(popData, d => d[val]);
+  let maxValue = d3.max(popData, d => d[val]);
+
   let scale = d3.scaleLinear()
-    .domain([0, d3.max(popData, d => d[val])])
+    .domain([minValue, maxValue])
     .range(colorRanges[val]);
 
   //Set transitions and apply colors to map

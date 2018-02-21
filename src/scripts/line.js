@@ -107,7 +107,6 @@ function drawLine(countyData) {
       .call(d3.axisBottom(xScale).ticks(7).tickFormat(d3.format('.0f')));
 
   //Y Axis
-  // TODO: fix y-axis scaling
   graph
   .select('.y-axis')
     .transition(tAxis)
