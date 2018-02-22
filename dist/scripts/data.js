@@ -83,18 +83,22 @@ function ready(error, mapData, popData, stateData) {
 
 function displayCountyInfo(countyData) {
   //Select Div
-  const countyInfo = document.querySelector('.county-info');
+  const table = document.querySelector('.county-data-table');
+  const title = document.querySelector('.county-title');
 
   //Check for a selected county
   if (countyData !== undefined) {
     let countyName = countyData.countyName;
     let countyDataArray = countyData.countyPopData;
 
-    //Map population array and format string
-    let popArr = countyDataArray.map(row => row.population.toLocaleString());
+    //Set up to display data
+    title.innerHTML = "Estimated Populations of <span class='colored-text county-name'></span>.";
 
     //Remove class hiding div
-    countyInfo.classList.remove('hidden');
+    table.classList.remove('hidden');
+
+    //Map population array and format string
+    let popArr = countyDataArray.map(row => row.population.toLocaleString());
 
     //Update elements
     let name = document.querySelector('.county-name').innerHTML = countyName;
@@ -105,16 +109,14 @@ function displayCountyInfo(countyData) {
     let year14 = document.querySelector('.population14').innerHTML = popArr[4];
     let year15 = document.querySelector('.population15').innerHTML = popArr[5];
     let year16 = document.querySelector('.population16').innerHTML = popArr[6];
+  } else {
+    title.innerHTML = 'Select a county on the map to see more info.';
   }
 }
 
 function displayTexasInfo(selectedYear, statePopulation) {
   let yearSelectedDisplays = document.querySelectorAll('.selected-year');
   yearSelectedDisplays[0].innerHTML = selectedYear;
-  //yearSelectedDisplays[1].innerHTML = selectedYear;
-
-  // let censusNumDisplay = document.querySelector('.census-num');
-  // censusNumDisplay.innerHTML = (+statePopulation.census).toLocaleString();
 
   let populationNumDisplay = document.querySelector('.estimate');
   populationNumDisplay.innerHTML = (+statePopulation[selectedYear]).toLocaleString();
