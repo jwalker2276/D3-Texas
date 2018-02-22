@@ -86,12 +86,13 @@ function setColor(val, popData) {
     pop2016: ['white', 'purple'],
   };
 
-  let minValue = d3.min(popData, d => d[val]);
-  let maxValue = d3.max(popData, d => d[val]);
+  //Population Domain from Domain
+  let popDomain = [0, 2000, 5000, 10000, 15000, 25000, 100000, 500000, 1000000];
 
-  let scale = d3.scaleLinear()
-    .domain([minValue, maxValue])
-    .range(colorRanges[val]);
+  //Scale
+  let scale = d3.scaleThreshold()
+    .domain(popDomain)
+    .range(d3.schemeYlOrRd[9]);
 
   //Set transitions and apply colors to map
   d3.selectAll('.county')
