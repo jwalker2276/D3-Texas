@@ -148,7 +148,7 @@ function getCountyData(d) {
 //************************************************
 
 //Set up tooltip element
-let tooltip = d3.select('body').append('div').classed('tooltip', true);
+let tooltip = d3.select('.grid-wrapper').append('div').classed('tooltip', true);
 
 //Tooltip show
 function showTooltip(countyData) {
