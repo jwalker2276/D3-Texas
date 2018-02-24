@@ -5,7 +5,7 @@
   --font: #e6e6e6;
   /* --accent: #084887; */
   --accent: rgb(254, 217, 118);
-  --marginAmount: 10px;
+  --marginAmount: 15px;
 }
 
 html, body {
@@ -31,7 +31,7 @@ body {
   display: grid;
   grid-gap: var(--marginAmount);
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto 1fr 1fr;
+  grid-template-rows: auto auto 1.5fr 1fr;
   grid-template-areas:
     'header data-btn'
     'info-input population'
@@ -46,7 +46,7 @@ body {
 
 .tile {
   background-color: var(--tile-bk);
-  /* box-shadow: 7px 10px 2px 0px rgba(0,0,0,0.2); */
+  box-shadow: 7px 10px 2px 0px rgba(0,0,0,0.2);
   text-align: center;
   align-items: center;
 }
@@ -159,7 +159,6 @@ input.year {
     'year4 pop4'
     'year5 pop5'
     'year6 pop6';
-  /* border-top: var(--marginAmount) solid var(--main-bk); */
 }
 
 .colored-text {
@@ -179,13 +178,12 @@ input.year {
 /* Line Graph */
 .graph {
   grid-area: graph;
-  /* display: grid; */
-  /* grid-gap: var(--marginAmount); */
-  /* grid-template-rows: 1fr;
+  display: grid;
+  grid-template-rows: auto 1fr;
   grid-template-columns: 1fr;
   grid-template-areas:
     'header'
-    'graph'; */
+    'graph';
 }
 
 .graph-title {
@@ -194,8 +192,10 @@ input.year {
   font-weight: 400;
 }
 
-.graph > graph {
+.graph-container {
   grid-area: graph;
+  padding-left: 10px;
+  width: 100%;
 }
 
 /* Line path itself */
@@ -203,8 +203,6 @@ input.year {
   stroke: var(--accent);
   fill: none;
   stroke-width: .5px;
-  /* padding-left: 0; */
-  /* border-top: var(--marginAmount) solid var(--main-bk); */
 }
 
 /* Labels for x and y axis */

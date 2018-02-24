@@ -1,6 +1,6 @@
 function createLineGraph(geoData, width, height) {
   //Parameters for svg element
-  let margin = { top: 50, right: 50, bottom: 50, left: 90 };
+  let margin = { top: 25, right: 50, bottom: 50, left: 90 };
   let graphWidth = ((width) - margin.left - margin.right);
   let graphHeight = ((height) - margin.top - margin.bottom);
 
@@ -67,7 +67,7 @@ function createLineGraph(geoData, width, height) {
 //Function draws line when map county is clicked
 function drawLine(countyData) {
   let graph = d3.select('svg.line-chart');
-  let margin = { top: 50, right: 50, bottom: 50, left: 75 };
+  let margin = { top: 25, right: 50, bottom: 50, left: 90 };
   let graphWidth = (+graph.attr('width') - margin.left - margin.right);
   let graphHeight = (+graph.attr('height') - margin.top - margin.bottom);
 

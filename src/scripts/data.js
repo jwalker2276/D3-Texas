@@ -54,6 +54,9 @@ function ready(error, mapData, popData, stateData) {
   //Width and height of line graph
   let graphWidth = +d3.select('.graph').node().offsetWidth;
   let graphHeight = +d3.select('.graph').node().offsetHeight;
+  // let graphWidth = +d3.select('.graph-container').node().offsetWidth;
+  // let graphHeight = +d3.select('.graph-container').node().offsetHeight;
+  console.log(graphWidth, graphHeight);
 
   //Parameters for input selector
   let years = d3.extent(geoData, d => d.year);
