@@ -68,10 +68,6 @@ body {
   }
 }
 
-@@media screen and (max-width: ) {
-
-}
-
 /* Class to hide county data until user interacts */
 .hidden {
   opacity: 0.0;

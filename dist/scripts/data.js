@@ -1,4 +1,9 @@
-d3.queue()
+//Start build process
+getData();
+
+//Get data from files and filter
+function getData() {
+  d3.queue()
   .defer(d3.json, 'data/texas_shape.topojson')
   .defer(d3.csv, 'data/texas_population_county.csv', function (row) {
     return {
@@ -17,11 +22,9 @@ d3.queue()
   })
   .defer(d3.csv, 'data/texas_population_state.csv')
   .await(ready);
+}
 
-// //Watch for resizing of window
-// window.addEventListener('resize', ready);
-
-//Primary function for svgs and data
+//Check for errors, convert and filter data
 function ready(error, mapData, popData, stateData) {
   if (error) throw error;
 
@@ -50,6 +53,20 @@ function ready(error, mapData, popData, stateData) {
     2017: stateData[1].respop72017,
   };
 
+  visualizeData(geoData, popData, statePopulation);
+}
+
+//Add event to check for window resizing
+window.addEventListener('resize', reload);
+
+//Reload page
+function reload() {
+  window.location.reload();
+}
+
+//Build visuals of document
+function visualizeData(geoData, popData, statePopulation) {
+
   //Width and height of map
   let mapWidth = +d3.select('.map').node().offsetWidth;
   let mapHeight = +d3.select('.map').node().offsetHeight;
@@ -65,11 +82,22 @@ function ready(error, mapData, popData, stateData) {
   let selectedYear = minYear;
   let countyData = undefined;
 
+  //Update State Info
   displayTexasInfo(selectedYear, statePopulation);
+
+  //Update County Info
   displayCountyInfo(countyData);
+
+  //Create map elements in document
   createMap(mapWidth, mapHeight);
+
+  //Draw map with data from file
   drawMap(geoData);
+
+  //Set up color for map with data from file
   setColor('pop' + minYear, popData);
+
+  //Draw line graph incluided data
   createLineGraph(geoData, graphWidth, graphHeight);
 
   //Year input selector
@@ -84,6 +112,7 @@ function ready(error, mapData, popData, stateData) {
     });
 }
 
+//Update County Info
 function displayCountyInfo(countyData) {
   //Select Div
   const table = document.querySelector('.county-data-table');
@@ -117,6 +146,7 @@ function displayCountyInfo(countyData) {
   }
 }
 
+//Update State Info
 function displayTexasInfo(selectedYear, statePopulation) {
   let yearSelectedDisplays = document.querySelectorAll('.selected-year');
   yearSelectedDisplays[0].innerHTML = selectedYear;
