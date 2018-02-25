@@ -1,11 +1,11 @@
  :root {
-  --main-bk: #939393;
-  --tile-bk: #343435;
+  --background: #414345;
+  --tile-bk: #262627;
   --tile-head: #4b4b4b;
-  --font: #e6e6e6;
-  /* --accent: #084887; */
-  --accent: rgb(254, 217, 118);
-  --marginAmount: 15px;
+  --county-outline: #0e0e0f;
+  --font: #ebebeb;
+  --accent: #fed976;
+  --marginAmount: 20px;
 }
 
 html, body {
@@ -20,7 +20,8 @@ html, body {
 body {
   font-family: 'Oxygen', sans-serif;
   font-size: 16px;
-  background-color: var(--main-bk);
+  /* background: linear-gradient(#232526, #414345, #232526); */
+  background-color: var(--background);
   color: var(--font);
   margin: var(--marginAmount);
 }
@@ -70,7 +71,7 @@ body {
 
 .tile {
   background-color: var(--tile-bk);
-  box-shadow: 7px 10px 2px 0px rgba(0,0,0,0.2);
+  box-shadow: 7px 10px 2px 0px rgba(0,0,0,0.1);
   text-align: center;
   align-items: center;
 }
@@ -162,30 +163,30 @@ input.year {
   appearance: none;
   outline: none;
   border-radius: 5px;
+  background-color: var(--background);
   cursor: pointer;
-  background-color: var(--main-bk);
 }
 
 input.year::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
 }
 
 input.year::-moz-range-thumb {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
 }
 
 input.year::-ms-thumb {
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   background: var(--accent);
   cursor: pointer;
@@ -298,7 +299,7 @@ input.year::-ms-thumb {
 
 /* Map paths that outline the counties */
 path {
-  stroke: var(--main-bk);
+  stroke: var(--county-outline);
   stroke-width: 0.50px;
 }
 
@@ -321,7 +322,7 @@ path {
   position: absolute;
   pointer-events: none;
   background-color: var(--tile-bk);
-  border: 5px solid var(--font);
+  border: 5px solid var(--background);
   border-radius: 8px;
   padding: 15px;
 }
