@@ -23,12 +23,12 @@ function drawMap(geoData) {
   // console.log(mapHeight, mapWidth);
 
   //Media Queries for map
-  if (mapWidth >= 1687) {
+  if (mapWidth >= 1677) {
     // console.log('setting to your monitor cost to much');
     xOffset = mapWidth / 1.75;
-    yOffset = -60;
-    scaleFactor = 3;
-  } else if (mapWidth >= 1260) {
+    yOffset = 0;
+    scaleFactor = 4;
+  } else if (mapWidth >= 1240) {
     // console.log('setting to desktopXLarge');
     xOffset = mapWidth / 2 + 150;
     yOffset = -50;
@@ -47,7 +47,7 @@ function drawMap(geoData) {
     // console.log('setting to tablet');
     xOffset = mapWidth / 1.39;
     yOffset = 0;
-    scaleFactor = 9;
+    scaleFactor = 7;
   } else if (mapWidth < 360) {
     xOffset = mapWidth / 1.39;
     yOffset = 0;
@@ -82,15 +82,6 @@ function drawMap(geoData) {
 
 //Set color of counties
 function setColor(val, popData) {
-  let colorRanges = {
-    pop2010: ['#ffffff', '#ff0000'],
-    pop2011: ['white', 'purple'],
-    pop2012: ['white', 'purple'],
-    pop2013: ['white', 'purple'],
-    pop2014: ['white', 'purple'],
-    pop2015: ['white', 'purple'],
-    pop2016: ['white', 'purple'],
-  };
 
   //Population Domain from Domain
   let popDomain = [0, 2000, 5000, 10000, 15000, 25000, 100000, 500000, 1000000];
@@ -116,38 +107,26 @@ function setColor(val, popData) {
 //************************************************
 
 function getCountyData(d) {
-  let countyData = {};
   const data = d.properties;
-  // if (data === undefined) {
-  //   countyData = {
-  //     countyName: '',
-  //     countyPopData: [
-  //       { year: 2010, population: 0 },
-  //       { year: 2011, population: 0 },
-  //       { year: 2012, population: 0 },
-  //       { year: 2013, population: 0 },
-  //       { year: 2014, population: 0 },
-  //       { year: 2015, population: 0 },
-  //       { year: 2016, population: 0 },
-  //     ],
-  //   };
-  // } else {
-    countyData = {
-      countyName: data.countyName,
-      countyPopData: [
-        { year: 2010, population: data.pop2011 },
-        { year: 2011, population: data.pop2012 },
-        { year: 2012, population: data.pop2010 },
-        { year: 2013, population: data.pop2013 },
-        { year: 2014, population: data.pop2014 },
-        { year: 2015, population: data.pop2015 },
-        { year: 2016, population: data.pop2016 },
-      ],
-    };
-    drawLine(countyData);
-    displayCountyInfo(countyData);
-  }
-//}
+  let countyData = {
+    countyName: data.countyName,
+    countyPopData: [
+      { year: 2010, population: data.pop2011 },
+      { year: 2011, population: data.pop2012 },
+      { year: 2012, population: data.pop2010 },
+      { year: 2013, population: data.pop2013 },
+      { year: 2014, population: data.pop2014 },
+      { year: 2015, population: data.pop2015 },
+      { year: 2016, population: data.pop2016 },
+    ],
+  };
+
+  //Update map with data
+  drawLine(countyData);
+
+  //Update county with data
+  displayCountyInfo(countyData);
+}
 
 //************************************************
 //**Tool tips***************************************

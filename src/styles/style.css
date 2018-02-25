@@ -51,7 +51,7 @@ body {
   grid-template-columns: 2fr 1fr;
   grid-template-rows: auto auto 1fr 1fr;
   grid-template-areas:
-    'header data-btn'
+    'header project-info'
     'info-input population'
     'map table'
     'map graph';
@@ -97,10 +97,21 @@ header > p {
 }
 
 /* Data Btn */
-.data {
-  grid-area: data-btn;
+.project-data {
+  grid-area: project-info;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+}
+
+.project-data > p {
+  font-weight: 700;
+  font-size: 1em;
+}
+
+.project-data > a {
+  text-decoration: none;
+  color: var(--font);
 }
 
 /* Map Controls */
