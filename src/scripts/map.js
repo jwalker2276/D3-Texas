@@ -47,10 +47,12 @@ function drawMap(geoData) {
     yOffset = 0;
     scaleFactor = 7;
   } else if (mapWidth < 359) {
-    console.log(mapHeight, mapWidth);
+    //console.log('too small for good experience');
     xOffset = mapWidth / 1.39;
     yOffset = 0;
     scaleFactor = 9;
+
+    //Select text in header and show message to user.
     let header = document.querySelector('header h2');
     let message = document.querySelector('header p');
     header.innerHTML = ('Please use a bigger screen for a better experience!');

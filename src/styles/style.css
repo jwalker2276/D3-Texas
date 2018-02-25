@@ -113,7 +113,7 @@ header > p {
 .info-input {
   grid-area: info-input;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
   grid-template-areas:
     'label1 map-input year';
@@ -142,8 +142,53 @@ header > p {
   font-weight: 400;
 }
 
-input.year {
+.input-container {
   grid-area: map-input;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.input-container > p {
+  margin: 0;
+  padding-bottom: 15px;
+  font-size: 1em;
+  font-weight: 300;
+  color: var(--font);
+}
+
+/* Slider */
+input.year {
+  appearance: none;
+  outline: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: var(--main-bk);
+}
+
+input.year::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+input.year::-moz-range-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+input.year::-ms-thumb {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
 }
 
 .info-year {
@@ -253,7 +298,7 @@ input.year {
 
 /* Map paths that outline the counties */
 path {
-  stroke: black;
+  stroke: var(--main-bk);
   stroke-width: 0.50px;
 }
 
@@ -275,8 +320,8 @@ path {
   opacity: 0;
   position: absolute;
   pointer-events: none;
-  background-color: var(--main-bk);
-  border: 8px solid red;
+  background-color: var(--tile-bk);
+  border: 5px solid var(--font);
   border-radius: 8px;
   padding: 15px;
 }
@@ -289,7 +334,7 @@ path {
   content: ' ';
   position: absolute;
   border: 12px solid transparent;
-  border-bottom-color: red;
+  border-bottom-color: var(--font);
   top: -30px;
   left: 50%;
   margin-left: -6px;
