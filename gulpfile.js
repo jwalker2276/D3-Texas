@@ -6,29 +6,33 @@ const autoprefixer = require('autoprefixer');
 const browserSync = require('browser-sync');
 const server = browserSync.create();
 
+const babel = require('gulp-babel');
+
 const paths = {
   styles: {
     src: 'src/styles/**/*.css',
-    dest: 'dist/styles/'
+    dest: 'dist/styles/',
   },
   scripts: {
     src: 'src/scripts/**/*.js',
-    dest: 'dist/scripts/'
+    dest: 'dist/scripts/',
   },
   markup: {
-    src: 'index.html'
-  }
+    src: 'index.html',
+  },
 };
 
 //CSS Pipe
-function styles () {
+function styles() {
   return gulp.src(paths.styles.src)
-    .pipe(postcss([ autoprefixer({browsers:['last 2 version']}) ]) )
+    .pipe(postcss([autoprefixer({ browsers: ['last 2 version'] })]))
     .pipe(gulp.dest(paths.styles.dest));
 }
+
 //JS Pipe
-function scripts () {
+function scripts() {
   return gulp.src(paths.scripts.src)
+    .pipe(babel({ presets: ['env'] }))
     .pipe(gulp.dest(paths.scripts.dest));
 }
 
@@ -36,28 +40,33 @@ function scripts () {
 function serverSetup(done) {
   server.init({
     server: {
-      baseDir: './'
-    }
+      baseDir: './',
+    },
   });
   done();
 }
+
 //Browser Sync fx
-function reload (done) {
+function reload(done) {
   server.reload();
   done();
 }
 
 //Glup fx
-function watch () {
+function watch() {
+
   //Watch JS
   gulp.watch(paths.scripts.src, gulp.series(scripts, reload));
+
   //Watch CSS
   gulp.watch(paths.styles.src, gulp.series(styles, reload));
+
   //Watch HTML
   gulp.watch(paths.markup.src, reload);
 }
 
 //Main task definition
-let build = gulp.series( gulp.parallel(styles, scripts), serverSetup, watch);
+let build = gulp.series(gulp.parallel(styles, scripts), serverSetup, watch);
+
 //Main task
 gulp.task('default', build);

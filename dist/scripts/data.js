@@ -1,11 +1,11 @@
+'use strict';
+
 //Start build process
 getData();
 
 //Get data from files and filter
 function getData() {
-  d3.queue()
-  .defer(d3.json, 'data/texas_shape.topojson')
-  .defer(d3.csv, 'data/texas_population_county.csv', function (row) {
+  d3.queue().defer(d3.json, 'data/texas_shape.topojson').defer(d3.csv, 'data/texas_population_county.csv', function (row) {
     return {
       countyID: +row.id2,
       countyName: row.displaylabel,
@@ -17,11 +17,9 @@ function getData() {
       pop2014: +row.respop72014,
       pop2015: +row.respop72015,
       pop2016: +row.respop72016,
-      years: [2010, 2011, 2012, 2013, 2014, 2015, 2016],
+      years: [2010, 2011, 2012, 2013, 2014, 2015, 2016]
     };
-  })
-  .defer(d3.csv, 'data/texas_population_state.csv')
-  .await(ready);
+  }).defer(d3.csv, 'data/texas_population_state.csv').await(ready);
 }
 
 //Check for errors, convert and filter data
@@ -29,19 +27,23 @@ function ready(error, mapData, popData, stateData) {
   if (error) throw error;
 
   //Convert topojson to json data
-  let geoData = topojson.feature(mapData, {
+  var geoData = topojson.feature(mapData, {
     type: 'GeometryCollection',
-    geometries: mapData.objects.texas_shape.geometries,
+    geometries: mapData.objects.texas_shape.geometries
   }).features;
 
   //Filter data and join
-  popData.forEach(row => {
-    let counties = geoData.filter(d => d.properties.GEOID == row.countyID);
-    counties.forEach(county => county.properties = row);
+  popData.forEach(function (row) {
+    var counties = geoData.filter(function (d) {
+      return d.properties.GEOID == row.countyID;
+    });
+    counties.forEach(function (county) {
+      return county.properties = row;
+    });
   });
 
   //State population data
-  let statePopulation = {
+  var statePopulation = {
     census: stateData[1].rescen42010,
     2010: stateData[1].rescen42010,
     2011: stateData[1].respop72011,
@@ -50,7 +52,7 @@ function ready(error, mapData, popData, stateData) {
     2014: stateData[1].respop72014,
     2015: stateData[1].respop72015,
     2016: stateData[1].respop72016,
-    2017: stateData[1].respop72017,
+    2017: stateData[1].respop72017
   };
 
   visualizeData(geoData, popData, statePopulation);
@@ -68,19 +70,22 @@ function reload() {
 function visualizeData(geoData, popData, statePopulation) {
 
   //Width and height of map
-  let mapWidth = +d3.select('.map').node().offsetWidth;
-  let mapHeight = +d3.select('.map').node().offsetHeight;
+  var mapWidth = +d3.select('.map').node().offsetWidth;
+  var mapHeight = +d3.select('.map').node().offsetHeight;
 
   //Width and height of line graph
-  let graphWidth = +d3.select('.graph-container').node().offsetWidth;
-  let graphHeight = +d3.select('.graph-container').node().offsetHeight;
+  var graphWidth = +d3.select('.graph-container').node().offsetWidth;
+  var graphHeight = +d3.select('.graph-container').node().offsetHeight;
 
   //Parameters for input selector
-  let years = d3.extent(geoData, d => d.year);
-  let minYear = geoData[0].properties.years[0];
-  let maxYear = geoData[0].properties.years[geoData[0].properties.years.length - 1];
-  let selectedYear = minYear;
-  let countyData = undefined;
+  var years = d3.extent(geoData, function (d) {
+    return d.year;
+  });
+
+  var minYear = geoData[0].properties.years[0];
+  var maxYear = geoData[0].properties.years[geoData[0].properties.years.length - 1];
+  var selectedYear = minYear;
+  var countyData = undefined;
 
   //Update State Info
   displayTexasInfo(selectedYear, statePopulation);
@@ -101,27 +106,23 @@ function visualizeData(geoData, popData, statePopulation) {
   createLineGraph(geoData, graphWidth, graphHeight);
 
   //Year input selector
-  d3.select('.year')
-    .property('min', minYear)
-    .property('max', maxYear)
-    .property('value', minYear)
-    .on('input', () => {
-      selectedYear = +d3.event.target.value;
-      setColor('pop' + selectedYear, popData);
-      displayTexasInfo(selectedYear, statePopulation);
-    });
+  d3.select('.year').property('min', minYear).property('max', maxYear).property('value', minYear).on('input', function () {
+    selectedYear = +d3.event.target.value;
+    setColor('pop' + selectedYear, popData);
+    displayTexasInfo(selectedYear, statePopulation);
+  });
 }
 
 //Update County Info
 function displayCountyInfo(countyData) {
   //Select Div
-  const table = document.querySelector('.county-data-table');
-  const title = document.querySelector('.county-title');
+  var table = document.querySelector('.county-data-table');
+  var title = document.querySelector('.county-title');
 
   //Check for a selected county
   if (countyData !== undefined) {
-    let countyName = countyData.countyName;
-    let countyDataArray = countyData.countyPopData;
+    var countyName = countyData.countyName;
+    var countyDataArray = countyData.countyPopData;
 
     //Set up to display data
     title.innerHTML = "Estimated Populations of <span class='colored-text county-name'></span>.";
@@ -130,17 +131,19 @@ function displayCountyInfo(countyData) {
     table.classList.remove('hidden');
 
     //Map population array and format string
-    let popArr = countyDataArray.map(row => row.population.toLocaleString());
+    var popArr = countyDataArray.map(function (row) {
+      return row.population.toLocaleString();
+    });
 
     //Update elements
-    let name = document.querySelector('.county-name').innerHTML = countyName;
-    let year10 = document.querySelector('.population10').innerHTML = popArr[0];
-    let year11 = document.querySelector('.population11').innerHTML = popArr[1];
-    let year12 = document.querySelector('.population12').innerHTML = popArr[2];
-    let year13 = document.querySelector('.population13').innerHTML = popArr[3];
-    let year14 = document.querySelector('.population14').innerHTML = popArr[4];
-    let year15 = document.querySelector('.population15').innerHTML = popArr[5];
-    let year16 = document.querySelector('.population16').innerHTML = popArr[6];
+    var name = document.querySelector('.county-name').innerHTML = countyName;
+    var year10 = document.querySelector('.population10').innerHTML = popArr[0];
+    var year11 = document.querySelector('.population11').innerHTML = popArr[1];
+    var year12 = document.querySelector('.population12').innerHTML = popArr[2];
+    var year13 = document.querySelector('.population13').innerHTML = popArr[3];
+    var year14 = document.querySelector('.population14').innerHTML = popArr[4];
+    var year15 = document.querySelector('.population15').innerHTML = popArr[5];
+    var year16 = document.querySelector('.population16').innerHTML = popArr[6];
   } else {
     title.innerHTML = 'Select a county on the map to see more info.';
   }
@@ -148,9 +151,9 @@ function displayCountyInfo(countyData) {
 
 //Update State Info
 function displayTexasInfo(selectedYear, statePopulation) {
-  let yearSelectedDisplays = document.querySelectorAll('.selected-year');
+  var yearSelectedDisplays = document.querySelectorAll('.selected-year');
   yearSelectedDisplays[0].innerHTML = selectedYear;
 
-  let populationNumDisplay = document.querySelector('.estimate');
+  var populationNumDisplay = document.querySelector('.estimate');
   populationNumDisplay.innerHTML = (+statePopulation[selectedYear]).toLocaleString();
 }
