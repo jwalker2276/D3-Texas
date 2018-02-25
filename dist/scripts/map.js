@@ -20,29 +20,37 @@ function drawMap(geoData) {
   let xOffset = 0;
   let yOffset = 0;
 
+  console.log(mapHeight, mapWidth);
+
   //Media Queries for map
   if (mapWidth >= 1687) {
-    //console.log('setting to your monitor cost to much');
+    console.log('setting to your monitor cost to much');
     xOffset = mapWidth / 1.75;
     yOffset = -60;
     scaleFactor = 3;
   } else if (mapWidth >= 1260) {
-    //console.log('setting to desktopXLarge');
+    console.log('setting to desktopXLarge');
     xOffset = mapWidth / 2 + 150;
     yOffset = -50;
     scaleFactor = 5;
   } else if (mapWidth >= 940) {
-    //console.log('setting to desktopLarge');
+    console.log('setting to desktopLarge');
     xOffset = mapWidth / 1.6;
-    yOffset = -40;
+    yOffset = 0;
     scaleFactor = 5;
   } else if (mapWidth >= 663) {
-    //console.log('setting to laptop');
-    xOffset = mapWidth / 1.5;
-    yOffset = -25;
-    scaleFactor = 7;
-  } else if (mapWidth >= 428) {
-    //console.log('setting to tablet');
+    console.log('setting to laptop');
+    xOffset = mapWidth / 1.6;
+    yOffset = 0;
+    scaleFactor = 5;
+  } else if (mapWidth >= 360) {
+    console.log('setting to tablet');
+    xOffset = mapWidth / 1.39;
+    yOffset = 0;
+    scaleFactor = 9;
+  } else if (mapWidth < 360) {
+    let body = document.querySelector('body');
+    console.log('too small');
     xOffset = mapWidth / 1.39;
     yOffset = 0;
     scaleFactor = 9;

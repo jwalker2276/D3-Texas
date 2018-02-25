@@ -25,18 +25,51 @@ body {
   margin: var(--marginAmount);
 }
 
+@media screen and (max-width: 1680px) {
+  body {
+    font-size: 14px;
+    background-color: red;
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  :root {
+    --marginAmount: 10px;
+  }
+
+  body {
+    font-size: 12px;
+    background-color: blue;
+  }
+}
+
 /* Page Grid */
 .grid-wrapper {
   height: 100%;
   display: grid;
   grid-gap: var(--marginAmount);
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto 1.5fr 1fr;
+  grid-template-rows: auto auto 1fr 1fr;
   grid-template-areas:
     'header data-btn'
     'info-input population'
     'map table'
     'map graph';
+}
+
+
+@media screen and (max-width: 1024px) {
+  body {
+    background-color: yellow;
+  }
+  .grid-wrapper {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr 1fr;
+  }
+}
+
+@@media screen and (max-width: ) {
+
 }
 
 /* Class to hide county data until user interacts */
@@ -196,6 +229,7 @@ input.year {
   grid-area: graph;
   padding-left: 10px;
   width: 100%;
+  height: 100%;
 }
 
 /* Line path itself */

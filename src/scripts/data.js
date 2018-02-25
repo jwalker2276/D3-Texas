@@ -18,6 +18,9 @@ d3.queue()
   .defer(d3.csv, 'data/texas_population_state.csv')
   .await(ready);
 
+// //Watch for resizing of window
+// window.addEventListener('resize', ready);
+
 //Primary function for svgs and data
 function ready(error, mapData, popData, stateData) {
   if (error) throw error;
@@ -52,11 +55,8 @@ function ready(error, mapData, popData, stateData) {
   let mapHeight = +d3.select('.map').node().offsetHeight;
 
   //Width and height of line graph
-  let graphWidth = +d3.select('.graph').node().offsetWidth;
-  let graphHeight = +d3.select('.graph').node().offsetHeight;
-  // let graphWidth = +d3.select('.graph-container').node().offsetWidth;
-  // let graphHeight = +d3.select('.graph-container').node().offsetHeight;
-  console.log(graphWidth, graphHeight);
+  let graphWidth = +d3.select('.graph-container').node().offsetWidth;
+  let graphHeight = +d3.select('.graph-container').node().offsetHeight;
 
   //Parameters for input selector
   let years = d3.extent(geoData, d => d.year);
