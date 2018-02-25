@@ -29,7 +29,6 @@ body {
 @media screen and (max-width: 1680px) {
   body {
     font-size: 14px;
-    background-color: red;
   }
 }
 
@@ -40,7 +39,6 @@ body {
 
   body {
     font-size: 12px;
-    background-color: blue;
   }
 }
 
@@ -60,9 +58,6 @@ body {
 
 
 @media screen and (max-width: 1024px) {
-  body {
-    background-color: yellow;
-  }
   .grid-wrapper {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 1fr 1fr;

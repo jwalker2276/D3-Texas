@@ -20,8 +20,6 @@ function drawMap(geoData) {
   let xOffset = 0;
   let yOffset = 0;
 
-  // console.log(mapHeight, mapWidth);
-
   //Media Queries for map
   if (mapWidth >= 1677) {
     // console.log('setting to your monitor cost to much');
@@ -48,10 +46,15 @@ function drawMap(geoData) {
     xOffset = mapWidth / 1.39;
     yOffset = 0;
     scaleFactor = 7;
-  } else if (mapWidth < 360) {
+  } else if (mapWidth < 359) {
+    console.log(mapHeight, mapWidth);
     xOffset = mapWidth / 1.39;
     yOffset = 0;
     scaleFactor = 9;
+    let header = document.querySelector('header h2');
+    let message = document.querySelector('header p');
+    header.innerHTML = ('Please use a bigger screen for a better experience!');
+    message.innerHTML = ('This page was designed for larger screen resolutions.');
   }
 
   let scaleAmount = (mapWidth / 2) * scaleFactor;
